@@ -128,6 +128,10 @@ function Calendar(data, {
       .attr("dy", "0.31em")
       .text(formatDay);
 
+    // Color ranges for the phases of life
+  var myColor = d3.scaleOrdinal().domain(data)
+    .range(["#f8d4a3", "#e4c0bf", "#cf8ab2", "#fc8cd7", "#7ad2ec", "#9aeea1"]);  
+
   const cell = year.append("g")
     .selectAll("rect")
     .data(weekday === "weekday"
@@ -138,7 +142,22 @@ function Calendar(data, {
       .attr("height", cellSize - 1)
       .attr("x", i => timeWeek.count(d3.utcYear(X[i]), X[i]) * cellSize + 0.5)
       .attr("y", i => countDay(X[i].getUTCDay()) * cellSize + 0.5)
-      .attr("fill", i => color(Y[i]));
+      
+      // Note to self: these fill lines can be used to colorize the interior of the cell for the "filled-in" style.
+      // First line will make solid white fill, second line fills based on data y-axis value, third line fills based on the array of colors I defined earlier. 
+      // .attr("fill", "#FFFFFF")
+      // .attr("fill", i => color(Y[i]))
+      .attr("fill", function(d){return myColor(d) })
+
+      
+      // Note to self: the second fill line can be used to colorize the border of the cell.
+      // First line fills based on data y-axis value, third line fills based on the array of colors I defined earlier. 
+      // .attr("stroke", i => color(Y[i]))
+      .attr("stroke", function(d){return myColor(d) })
+
+      .attr("stroke-width", "0.5");
+
+
 
   if (title) cell.append("title")
       .text(title);
@@ -151,7 +170,7 @@ function Calendar(data, {
   month.filter((d, i) => i).append("path")
       .attr("fill", "none")
       .attr("stroke", "#fff")
-      .attr("stroke-width", 3)
+      .attr("stroke-width", 0)
       .attr("d", pathMonth);
 
   month.append("text")
