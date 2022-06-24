@@ -1,6 +1,6 @@
 // https://observablehq.com/@d3/calendar@806
-import define1 from "./a33468b95d0b15b0@808.js";
-import define2 from "./7a9e12f9fb3d8e06@459.js";
+import define1 from "./color-legend@808.js";
+import define2 from "./example-components.js";
 
 function _1(dji,md){return(
 md`# Calendar
