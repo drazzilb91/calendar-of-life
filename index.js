@@ -18,6 +18,8 @@ function _key(Legend,chart){return(
   Legend(chart.scales.color, {title: "Daily change", marginLeft: 40})
   )}
 
+  
+
 function _chart(Calendar,dji,weekday,width){return(
 Calendar(dji, {
   x: d => d.Date,
@@ -42,6 +44,12 @@ Calendar(dji, {
 function _dji(FileAttachment){return(
 FileAttachment("^DJI@2.csv").csv({typed: true})
 )}
+
+function _14(Swatches, d3) {
+  return (
+    Swatches(d3.scaleOrdinal(["strawberries", "oranges", "pears"], d3.schemeCategory10))
+  )
+}
 
 function _Calendar(d3){return(
 function Calendar(data, {
@@ -149,6 +157,7 @@ function Calendar(data, {
       // .attr("fill", i => color(Y[i]))
       .attr("fill", function(d){return myColor(d) })
 
+
       
       // Note to self: the second fill line can be used to colorize the border of the cell.
       // First line fills based on data y-axis value, third line fills based on the array of colors I defined earlier. 
@@ -182,6 +191,8 @@ function Calendar(data, {
 }
 )}
 
+
+
 export default function define(runtime, observer) {
   const main = runtime.module();
   function toString() { return this.url; }
@@ -196,6 +207,9 @@ export default function define(runtime, observer) {
   main.variable(observer("weekday")).define("weekday", "sunday");
 
   main.variable(observer("key")).define("key", ["Legend","chart"], _key);
+
+  main.variable(observer("key1")).define("key1",["Swatches", "d3"], _14);
+
   main.variable(observer("chart")).define("chart", ["Calendar","dji","weekday","width"], _chart);
 
   //Two chart options. Different colors.
@@ -208,5 +222,8 @@ export default function define(runtime, observer) {
   const child1 = runtime.module(define1);
   main.import("Legend", child1);
   
+  const child2 = runtime.module(define1);
+  main.import("Swatches", child2);
+
   return main;
 }

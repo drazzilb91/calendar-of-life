@@ -1,6 +1,5 @@
 {
     "configurations": [
-
         {
             "type": "pwa-msedge",
             "name": "Launch Microsoft Edge",
@@ -8,7 +7,7 @@
             "runtimeArgs": [
                 "--remote-debugging-port=9222"
             ],
-            "url":  "http://localhost:10002", // Provide your project's url to finish configuring
+            "url": "c:\\Users\\Michael\\.vscode\\extensions\\ms-edgedevtools.vscode-edge-devtools-2.0.0\\out\\startpage\\index.html", // Provide your project's url to finish configuring
             "presentation": {
                 "hidden": true
             }
@@ -21,7 +20,7 @@
                 "--headless",
                 "--remote-debugging-port=9222"
             ],
-            "url":  "http://localhost:10002", // Provide your project's url to finish configuring
+            "url": "c:\\Users\\Michael\\.vscode\\extensions\\ms-edgedevtools.vscode-edge-devtools-2.0.0\\out\\startpage\\index.html", // Provide your project's url to finish configuring
             "presentation": {
                 "hidden": true
             }
@@ -30,7 +29,7 @@
             "type": "vscode-edge-devtools.debug",
             "name": "Open Edge DevTools",
             "request": "attach",
-            "url":  "http://localhost:10002", // Provide your project's url to finish configuring
+            "url": "c:\\Users\\Michael\\.vscode\\extensions\\ms-edgedevtools.vscode-edge-devtools-2.0.0\\out\\startpage\\index.html", // Provide your project's url to finish configuring
             "presentation": {
                 "hidden": true
             }

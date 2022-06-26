@@ -9,6 +9,7 @@
 
     <body>
         <div id="key"></div>
+        <div id="key1"></div>
         <div id="chart"></div>
         <div id="onecolorchart"></div>
         <script type="module">
@@ -22,6 +23,7 @@
 
             const main = runtime.module(define, name => {
                 if (name === "key") return new Inspector(document.querySelector("#key"));
+                if (name === "key1") return new Inspector(document.querySelector("#key1"));
                 if (name === "chart") return new Inspector(document.querySelector("#chart"));
                 // if (name === "onecolorchart") return new Inspector(document.querySelector("#onecolorchart"));
             });

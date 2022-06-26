@@ -1,6 +1,6 @@
 {
   "name": "@d3/calendar",
-  "main": "./35ba7e5ebbf04804@806.js",
+  "main": "./index.js",
   "version": "806.0.0",
   "homepage": "https://observablehq.com/@d3/calendar",
   "author": {
@@ -19,7 +19,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lite": "lite-server --port 10002",
+    "lite": "lite-server --port 8000",
     "start": "npm run lite"
   }
 }
