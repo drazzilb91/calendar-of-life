@@ -155,7 +155,16 @@ function Calendar(data, {
       // First line will make solid white fill, second line fills based on data y-axis value, third line fills based on the array of colors I defined earlier. 
       // .attr("fill", "#FFFFFF")
       // .attr("fill", i => color(Y[i]))
-      .attr("fill", function(d){return myColor(d) })
+      .attr("fill", function(d){
+        if (d > 2000) {
+          return "#000000"
+        }
+        else {
+          return "#FFFFFF"
+        } 
+        //console.log('value is %d',d)
+        //return myColor(d) 
+      })
 
 
       
