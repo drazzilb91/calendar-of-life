@@ -156,10 +156,12 @@ function Calendar(data, {
       // .attr("fill", "#FFFFFF")
       // .attr("fill", i => color(Y[i]))
       .attr("fill", function(d){
-        if (d > 2000) {
-          return "#000000"
+        if (X[d] < new Date()) {
+          return myColor(d)
         }
         else {
+          // console.log('Colored date is ',X[d])
+          // console.log('Today is ',new Date())
           return "#FFFFFF"
         } 
         //console.log('value is %d',d)
