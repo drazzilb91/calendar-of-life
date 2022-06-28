@@ -157,11 +157,12 @@ function Calendar(data, {
       // .attr("fill", i => color(Y[i]))
       .attr("fill", function(d){
         if (X[d] < new Date()) {
-          return myColor(d)
+          return myColor(Y[d])
         }
         else {
           // console.log('Colored date is ',X[d])
           // console.log('Today is ',new Date())
+          
           return "#FFFFFF"
         } 
         //console.log('value is %d',d)
@@ -173,7 +174,7 @@ function Calendar(data, {
       // Note to self: the second fill line can be used to colorize the border of the cell.
       // First line fills based on data y-axis value, third line fills based on the array of colors I defined earlier. 
       // .attr("stroke", i => color(Y[i]))
-      .attr("stroke", function(d){return myColor(d) })
+      .attr("stroke", function(d){return myColor(Y[d]) })
 
       .attr("stroke-width", "0.5");
 
