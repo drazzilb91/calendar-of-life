@@ -14,9 +14,6 @@ Inputs.select(new Map([
 // Legend(chart.scales.color, {title: "Daily change", tickFormat: "+%", marginLeft: 40})
 // )}
 
-function _key(Legend,chart){return(
-  Legend(chart.scales.color, {title: "Daily change", marginLeft: 40})
-  )}
 
   
 
@@ -47,7 +44,9 @@ FileAttachment("^DJI@2.csv").csv({typed: true})
 
 function _14(Swatches, d3) {
   return (
-    Swatches(d3.scaleOrdinal(["strawberries", "oranges", "pears"], d3.schemeCategory10))
+    Swatches(d3.scaleOrdinal(["Childhood (Age 0-13)", "Adolescence (Age 13-19)", "Early Adulthood (Age 20-34)", "Middle Adulthood (Age 35-49)", "Mature Adulthood (Age 50-79)", "Late Adulthood (Age 80+)"],
+      ["#aff05b", "#52f667", "#1ddfa3", "#23abd8", "#4c6edb", "#6e40aa"])
+    )
   )
 }
 
@@ -57,7 +56,7 @@ function Calendar(data, {
   y = ([, y]) => y, // given d in data, returns the (quantitative) y-value
   title, // given d in data, returns the title text
   width = 928, // width of the chart, in pixels
-  cellSize = 10, // width and height of an individual day, in pixels
+  cellSize = 15, // width and height of an individual day, in pixels
   weekday = "monday", // either: weekday, sunday, or monday
   formatDay = i => "SMTWTFS"[i], // given a day number in [0, 6], the day-of-week label
   formatMonth = "%b", // format specifier string for months (above the chart)
@@ -72,13 +71,14 @@ function Calendar(data, {
   const countDay = weekday === "sunday" ? i => i : i => (i + 6) % 7;
   const timeWeek = weekday === "sunday" ? d3.utcSunday : d3.utcMonday;
   const weekDays = weekday === "weekday" ? 5 : 7;
-  const height = cellSize * (weekDays + 2);
+  const height = cellSize //* (weekDays + 2);
 
   // Compute a color scale. This assumes a diverging color scheme where the pivot
   // is zero, and we want symmetric difference around zero.
   const max = d3.quantile(Y, 0.9975, Math.abs);
   // const color = d3.scaleSequential([-max, +max], colors).unknown("none");
   const color = d3.scaleSequential([0, +max], colors).unknown("none");
+
 
   // Construct formats.
   formatMonth = d3.utcFormat(formatMonth);
@@ -109,7 +109,7 @@ function Calendar(data, {
   const svg = d3.create("svg")
       .attr("width", width)
       .attr("height", height * years.length)
-      .attr("viewBox", [0, 0, width, height * years.length])
+      .attr("viewBox", [0, 0, width, height * (years.length+10)])
       .attr("style", "max-width: 100%; height: auto; height: intrinsic;")
       .attr("font-family", "sans-serif")
       .attr("font-size", 10);
@@ -121,25 +121,31 @@ function Calendar(data, {
 
   year.append("text")
       .attr("x", -5)
-      .attr("y", -5)
+      .attr("y", 0.75 * cellSize) // Lowered the year label to align with the first day of the week row (as we will be compressing to one row per week)
       .attr("font-weight", "bold")
       .attr("text-anchor", "end")
       .text(([key]) => key);
 
-  year.append("g")
-      .attr("text-anchor", "end")
-    .selectAll("text")
-    .data(weekday === "weekday" ? d3.range(1, 6) : d3.range(7))
-    .join("text")
-      .attr("x", -5)
-      .attr("y", i => (countDay(i) + 0.5) * cellSize)
-      .attr("dy", "0.31em")
-      .text(formatDay);
+  // year.append("g")
+  //     .attr("text-anchor", "end")
+  //   .selectAll("text")
+  //   .data(weekday === "weekday" ? d3.range(1, 6) : d3.range(7))
+  //   .join("text")
+  //     .attr("x", -5)
+  //     .attr("y", i => (countDay(i) + 0.5) * cellSize)
+  //     .attr("dy", "0.31em")
+  //     .text(formatDay);
 
     // Color ranges for the phases of life
-  var myColor = d3.scaleOrdinal().domain(data)
-    .range(["#f8d4a3", "#e4c0bf", "#cf8ab2", "#fc8cd7", "#7ad2ec", "#9aeea1"]);  
+  // var myColor = d3.scaleOrdinal().domain(data)
+  //   .range(["#f8d4a3", "#e4c0bf", "#cf8ab2", "#fc8cd7", "#7ad2ec", "#9aeea1"]);  
 
+  // var myColor = d3.scaleOrdinal(["Childhood (Age 0-13)", "Adolescence (Age 13-19)", "Early Adulthood (Age 20-34)", "Middle Adulthood (Age 35-49)", "Mature Adulthood (Age 50-79)", "Late Adulthood (Age 80+)"],
+    // ["#9aeea1", "#f8d4a3", "#7ad2ec", "#e9234b", "#f8d4a3", "#FF0000"]); //d3.schemeCategory10))
+
+  var myColor = d3.scaleOrdinal(["Childhood (Age 0-13)", "Adolescence (Age 13-19)", "Early Adulthood (Age 20-34)", "Middle Adulthood (Age 35-49)", "Mature Adulthood (Age 50-79)", "Late Adulthood (Age 80+)"],
+    ["#aff05b", "#52f667", "#1ddfa3", "#23abd8", "#4c6edb", "#6e40aa"]);
+   
   const cell = year.append("g")
     .selectAll("rect")
     .data(weekday === "weekday"
@@ -149,8 +155,9 @@ function Calendar(data, {
       .attr("width", cellSize - 1)
       .attr("height", cellSize - 1)
       .attr("x", i => timeWeek.count(d3.utcYear(X[i]), X[i]) * cellSize + 0.5)
-      .attr("y", i => countDay(X[i].getUTCDay()) * cellSize + 0.5)
-      
+      // .attr("y", i => countDay(X[i].getUTCDay()) * cellSize + 0.5)
+      .attr("y", 0)
+
       // Note to self: these fill lines can be used to colorize the interior of the cell for the "filled-in" style.
       // First line will make solid white fill, second line fills based on data y-axis value, third line fills based on the array of colors I defined earlier. 
       // .attr("fill", "#FFFFFF")
@@ -175,7 +182,19 @@ function Calendar(data, {
       // First line fills based on data y-axis value, third line fills based on the array of colors I defined earlier. 
       // .attr("stroke", i => color(Y[i]))
       .attr("stroke", function(d){return myColor(Y[d]) })
-
+      .attr("stroke", function(d){
+        if (X[d] < new Date()) {
+          return "#FFFFFF"
+        }
+        else {
+          // console.log('Colored date is ',X[d])
+          // console.log('Today is ',new Date())
+          return myColor(Y[d])
+          
+        } 
+        //console.log('value is %d',d)
+        //return myColor(d) 
+      })
       .attr("stroke-width", "0.5");
 
 
@@ -183,21 +202,21 @@ function Calendar(data, {
   if (title) cell.append("title")
       .text(title);
 
-  const month = year.append("g")
-    .selectAll("g")
-    .data(([, I]) => d3.utcMonths(d3.utcMonth(X[I[0]]), X[I[I.length - 1]]))
-    .join("g");
+  // const month = year.append("g")
+  //   .selectAll("g")
+  //   .data(([, I]) => d3.utcMonths(d3.utcMonth(X[I[0]]), X[I[I.length - 1]]))
+  //   .join("g");
 
-  month.filter((d, i) => i).append("path")
-      .attr("fill", "none")
-      .attr("stroke", "#fff")
-      .attr("stroke-width", 0)
-      .attr("d", pathMonth);
+  // month.filter((d, i) => i).append("path")
+  //     .attr("fill", "none")
+  //     .attr("stroke", "#fff")
+  //     .attr("stroke-width", 0)
+  //     .attr("d", pathMonth);
 
-  month.append("text")
-      .attr("x", d => timeWeek.count(d3.utcYear(d), timeWeek.ceil(d)) * cellSize + 2)
-      .attr("y", -5)
-      .text(formatMonth);
+  // month.append("text")
+  //     .attr("x", d => timeWeek.count(d3.utcYear(d), timeWeek.ceil(d)) * cellSize + 2)
+  //     .attr("y", -5)
+  //     .text(formatMonth);
 
   return Object.assign(svg.node(), {scales: {color}});
 }
@@ -218,7 +237,6 @@ export default function define(runtime, observer) {
   // main.variable(observer("weekday")).define("weekday", ["Generators", "viewof weekday"], (G, _) => G.input(_));
   main.variable(observer("weekday")).define("weekday", "sunday");
 
-  main.variable(observer("key")).define("key", ["Legend","chart"], _key);
 
   main.variable(observer("key1")).define("key1",["Swatches", "d3"], _14);
 
