@@ -2,6 +2,7 @@
 import define1 from "./color-legend@808.js";
 import define2 from "./example-components.js";
 
+
 function _weekday(Inputs){return(
 Inputs.select(new Map([
   ["Weekdays only", "weekday"],
@@ -146,6 +147,8 @@ function Calendar(data, {
   var myColor = d3.scaleOrdinal(["Childhood (Age 0-13)", "Adolescence (Age 13-19)", "Early Adulthood (Age 20-34)", "Middle Adulthood (Age 35-49)", "Mature Adulthood (Age 50-79)", "Late Adulthood (Age 80+)"],
     ["#aff05b", "#52f667", "#1ddfa3", "#23abd8", "#4c6edb", "#6e40aa"]);
    
+  
+    
   const cell = year.append("g")
     .selectAll("rect")
     .data(weekday === "weekday"
