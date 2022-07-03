@@ -333,7 +333,7 @@ function Swatches(color, {
 }
 
   </style>
-  <div>${domain.map(value => htl.html`<span class="${id}" style="--color: ${color(value)}">${format(value)}</span>`)}</div>`;
+  <div>${domain.map(value => htl.html`<span class="${id}" style="--color: ${color(value)};color:white;">${format(value)}</span>`)}</div>`;
 }
 )}
 

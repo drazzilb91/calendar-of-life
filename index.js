@@ -125,7 +125,8 @@ function Calendar(data, {
       .attr("y", 0.75 * cellSize) // Lowered the year label to align with the first day of the week row (as we will be compressing to one row per week)
       .attr("font-weight", "bold")
       .attr("text-anchor", "end")
-      .text(([key]) => key);
+      .text(([key]) => key)
+      .attr("fill","#FFFFFF");
 
   // year.append("g")
   //     .attr("text-anchor", "end")
@@ -173,7 +174,7 @@ function Calendar(data, {
           // console.log('Colored date is ',X[d])
           // console.log('Today is ',new Date())
           
-          return "#FFFFFF"
+          return "#000000"
         } 
         //console.log('value is %d',d)
         //return myColor(d) 
@@ -187,7 +188,7 @@ function Calendar(data, {
       .attr("stroke", function(d){return myColor(Y[d]) })
       .attr("stroke", function(d){
         if (X[d] < new Date()) {
-          return "#FFFFFF"
+          return "#000000"
         }
         else {
           // console.log('Colored date is ',X[d])
