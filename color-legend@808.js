@@ -331,9 +331,9 @@ function Swatches(color, {
   margin-right: 0.5em;
   background: var(--color);
 }
-
+  // Need to update this. Not good practice to edit the imported library script. Need something inside the css or index.js
   </style>
-  <div>${domain.map(value => htl.html`<span class="${id}" style="--color: ${color(value)}">${format(value)}</span>`)}</div>`;
+  <div>${domain.map(value => htl.html`<span class="${id}" style="--color: ${color(value)};color:white;">${format(value)}</span>`)}</div>`;
 }
 )}
 
