@@ -10,20 +10,12 @@ Inputs.select(new Map([
   ["Monday-based weeks", "monday"],
 ]))
 )}
-
-// function _key(Legend,chart){return(
-// Legend(chart.scales.color, {title: "Daily change", tickFormat: "+%", marginLeft: 40})
-// )}
-
-
   
 
 function _chart(Calendar,dji,weekday,width){return(
 Calendar(dji, {
   x: d => d.Date,
-  // y: (d, i, data) => i > 0 ? (d.Close - data[i - 1].Close) / data[i - 1].Close : NaN, // relative change
   y: d => d.Volume,
-  // yFormat: "+%", // show percent change on hover
   weekday,
   width
 })
@@ -77,7 +69,6 @@ function Calendar(data, {
   // Compute a color scale. This assumes a diverging color scheme where the pivot
   // is zero, and we want symmetric difference around zero.
   const max = d3.quantile(Y, 0.9975, Math.abs);
-  // const color = d3.scaleSequential([-max, +max], colors).unknown("none");
   const color = d3.scaleSequential([0, +max], colors).unknown("none");
 
 
@@ -128,23 +119,6 @@ function Calendar(data, {
       .text(([key]) => key)
       .attr("fill","#FFFFFF");
 
-  // year.append("g")
-  //     .attr("text-anchor", "end")
-  //   .selectAll("text")
-  //   .data(weekday === "weekday" ? d3.range(1, 6) : d3.range(7))
-  //   .join("text")
-  //     .attr("x", -5)
-  //     .attr("y", i => (countDay(i) + 0.5) * cellSize)
-  //     .attr("dy", "0.31em")
-  //     .text(formatDay);
-
-    // Color ranges for the phases of life
-  // var myColor = d3.scaleOrdinal().domain(data)
-  //   .range(["#f8d4a3", "#e4c0bf", "#cf8ab2", "#fc8cd7", "#7ad2ec", "#9aeea1"]);  
-
-  // var myColor = d3.scaleOrdinal(["Childhood (Age 0-13)", "Adolescence (Age 13-19)", "Early Adulthood (Age 20-34)", "Middle Adulthood (Age 35-49)", "Mature Adulthood (Age 50-79)", "Late Adulthood (Age 80+)"],
-    // ["#9aeea1", "#f8d4a3", "#7ad2ec", "#e9234b", "#f8d4a3", "#FF0000"]); //d3.schemeCategory10))
-
   var myColor = d3.scaleOrdinal(["Childhood (Age 0-13)", "Adolescence (Age 13-19)", "Early Adulthood (Age 20-34)", "Middle Adulthood (Age 35-49)", "Mature Adulthood (Age 50-79)", "Late Adulthood (Age 80+)"],
     ["#aff05b", "#52f667", "#1ddfa3", "#23abd8", "#4c6edb", "#6e40aa"]);
    
@@ -162,42 +136,24 @@ function Calendar(data, {
       // .attr("y", i => countDay(X[i].getUTCDay()) * cellSize + 0.5)
       .attr("y", 0)
 
-      // Note to self: these fill lines can be used to colorize the interior of the cell for the "filled-in" style.
-      // First line will make solid white fill, second line fills based on data y-axis value, third line fills based on the array of colors I defined earlier. 
-      // .attr("fill", "#FFFFFF")
-      // .attr("fill", i => color(Y[i]))
       .attr("fill", function(d){
         if (X[d] < new Date()) {
           return myColor(Y[d])
         }
-        else {
-          // console.log('Colored date is ',X[d])
-          // console.log('Today is ',new Date())
-          
+        else {          
           return "#000000"
         } 
-        //console.log('value is %d',d)
-        //return myColor(d) 
+
       })
 
-
-      
-      // Note to self: the second fill line can be used to colorize the border of the cell.
-      // First line fills based on data y-axis value, third line fills based on the array of colors I defined earlier. 
-      // .attr("stroke", i => color(Y[i]))
       .attr("stroke", function(d){return myColor(Y[d]) })
       .attr("stroke", function(d){
         if (X[d] < new Date()) {
           return "#000000"
         }
         else {
-          // console.log('Colored date is ',X[d])
-          // console.log('Today is ',new Date())
           return myColor(Y[d])
-          
         } 
-        //console.log('value is %d',d)
-        //return myColor(d) 
       })
       .attr("stroke-width", "0.5");
 
@@ -205,22 +161,6 @@ function Calendar(data, {
 
   if (title) cell.append("title")
       .text(title);
-
-  // const month = year.append("g")
-  //   .selectAll("g")
-  //   .data(([, I]) => d3.utcMonths(d3.utcMonth(X[I[0]]), X[I[I.length - 1]]))
-  //   .join("g");
-
-  // month.filter((d, i) => i).append("path")
-  //     .attr("fill", "none")
-  //     .attr("stroke", "#fff")
-  //     .attr("stroke-width", 0)
-  //     .attr("d", pathMonth);
-
-  // month.append("text")
-  //     .attr("x", d => timeWeek.count(d3.utcYear(d), timeWeek.ceil(d)) * cellSize + 2)
-  //     .attr("y", -5)
-  //     .text(formatMonth);
 
   return Object.assign(svg.node(), {scales: {color}});
 }
