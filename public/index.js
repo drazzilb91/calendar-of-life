@@ -48,9 +48,9 @@ function Calendar(data, {
   x = ([x]) => x, // given d in data, returns the (temporal) x-value
   y = ([, y]) => y, // given d in data, returns the (quantitative) y-value
   title, // given d in data, returns the title text
-  width = 928, // width of the chart, in pixels
+  width = 795, // width of the chart, in pixels
   cellSize = 15, // width and height of an individual day, in pixels
-  weekday = "monday", // either: weekday, sunday, or monday
+  weekday = "weekday", // either: weekday, sunday, or monday
   formatDay = i => "SMTWTFS"[i], // given a day number in [0, 6], the day-of-week label
   formatMonth = "%b", // format specifier string for months (above the chart)
   yFormat, // format specifier string for values (in the title)
@@ -126,38 +126,50 @@ function Calendar(data, {
     
   const cell = year.append("g")
     .selectAll("rect")
-    .data(weekday === "weekday"
-        ? ([, I]) => I.filter(i => ![0, 6].includes(X[i].getUTCDay()))
-        : ([, I]) => I)
+    // .data(weekday === "weekday"
+    //     ? ([, I]) => I.filter(i => ![0, 6].includes(X[i].getUTCDay()))
+    //     : ([, I]) => I)
+    // .data(([, I]) => I)
+    .data(([, I]) => I.filter(i => ![0,1,2,3,4, 6].includes(X[i].getUTCDay())))
     .join("rect")
       .attr("width", cellSize - 1)
       .attr("height", cellSize - 1)
       .attr("x", i => timeWeek.count(d3.utcYear(X[i]), X[i]) * cellSize + 0.5)
       // .attr("y", i => countDay(X[i].getUTCDay()) * cellSize + 0.5)
-      .attr("y", 0)
-
+      // .attr("y", 0)
       .attr("fill", function(d){
         if (X[d] < new Date()) {
+          // console.log(X[d])
           return myColor(Y[d])
-        }
+        }  //else if (X[d] === new Date()) {
+        //   console.log(X[d])
+        //   return "#FF0000"
+        // }
         else {          
           return "#000000"
         } 
 
-      })
-
-      .attr("stroke", function(d){return myColor(Y[d]) })
+      })    
       .attr("stroke", function(d){
         if (X[d] < new Date()) {
           return "#000000"
-        }
+        } 
         else {
           return myColor(Y[d])
         } 
       })
-      .attr("stroke-width", "0.5");
+      .attr("stroke-width", "0.5")
 
+      //Next steps: need to modify the statement so that it is checking if X[d] is part of the current week.    
+      .attr("class", function(d){
+        if (timeWeek.count(d3.utcYear(X[d]), X[d]) === timeWeek.count(d3.utcYear(new Date()), new Date()) && X[d].getUTCFullYear() === new Date().getUTCFullYear()) {
+          console.log(timeWeek.count(d3.utcYear(X[d]), X[d]))
+          console.log("test")
+          return "cursor"
+        }
+      })
 
+      
 
   if (title) cell.append("title")
       .text(title);
