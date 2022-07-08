@@ -132,3 +132,7 @@ dist
 
 # Excel
 *.xlsx
+
+#Firebase
+.firebase/
+
