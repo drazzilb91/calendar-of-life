@@ -1,28 +1,82 @@
+// import define1 from "./color-legend@808.js";
 
-import define1 from "./color-legend@808.js";
-
-
-
-function _weekday(Inputs){return(
-Inputs.select(new Map([
-  ["Weekdays only", "weekday"],
-  ["Sunday-based weeks", "sunday"],
-  ["Monday-based weeks", "monday"],
-]))
-)}
+function _Swatches(d3,htl){return(
+  function Swatches(color, {
+    columns = null,
+    format,
+    unknown: formatUnknown,
+    swatchSize = 15,
+    swatchWidth = swatchSize,
+    swatchHeight = swatchSize,
+    marginLeft = 0
+  } = {}) {
+    const id = `-swatches-${Math.random().toString(16).slice(2)}`;
+    const unknown = formatUnknown == null ? undefined : color.unknown();
+    const unknowns = unknown == null || unknown === d3.scaleImplicit ? [] : [unknown];
+    const domain = color.domain().concat(unknowns);
+    if (format === undefined) format = x => x === unknown ? formatUnknown : x;
   
+    function entity(character) {
+      return `&#${character.charCodeAt(0).toString()};`;
+    }
+  
+    if (columns !== null) return htl.html`<div style="display: flex; align-items: center; margin-left: ${+marginLeft}px; min-height: 33px; font: 10px sans-serif;">
+    <style>
+  
+  .${id}-item {
+    break-inside: avoid;
+    display: flex;
+    align-items: center;
+    padding-bottom: 1px;
+  }
+  
+  .${id}-label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100% - ${+swatchWidth}px - 0.5em);
+  }
+  
+  .${id}-swatch {
+    width: ${+swatchWidth}px;
+    height: ${+swatchHeight}px;
+    margin: 0 0.5em 0 0;
+  }
+  
+    </style>
+    <div style=${{width: "100%", columns}}>${domain.map(value => {
+      const label = `${format(value)}`;
+      return htl.html`<div class=${id}-item>
+        <div class=${id}-swatch style=${{background: color(value)}}></div>
+        <div class=${id}-label title=${label}>${label}</div>
+      </div>`;
+    })}
+    </div>
+  </div>`;
+  
+    return htl.html`<div style="display: flex; align-items: center; min-height: 33px; margin-left: ${+marginLeft}px; font: 10px sans-serif;">
+    <style>
+  
+  .${id} {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 1em;
+  }
+  
+  .${id}::before {
+    content: "";
+    width: ${+swatchWidth}px;
+    height: ${+swatchHeight}px;
+    margin-right: 0.5em;
+    background: var(--color);
+  }
+    // Need to update this. Not good practice to edit the imported library script. Need something inside the css or index.js
+    </style>
+    <div>${domain.map(value => htl.html`<span class="${id}" style="--color: ${color(value)};color:white;">${format(value)}</span>`)}</div>`;
+  }
+  )}
 
 function _chart(Calendar,dji,weekday,width){return(
-Calendar(dji, {
-  x: d => d.Date,
-  y: d => d.Volume,
-  weekday,
-  width
-})
-)}
-
-
-function _6(Calendar,dji,weekday,width){return(
 Calendar(dji, {
   x: d => d.Date,
   y: d => d.Volume,
@@ -64,7 +118,7 @@ function Calendar(data, {
   const countDay = weekday === "sunday" ? i => i : i => (i + 6) % 7;
   const timeWeek = weekday === "sunday" ? d3.utcSunday : d3.utcMonday;
   const weekDays = weekday === "weekday" ? 5 : 7;
-  const height = cellSize //* (weekDays + 2);
+  const height = cellSize;
 
   // Compute a color scale. This assumes a diverging color scheme where the pivot
   // is zero, and we want symmetric difference around zero.
@@ -85,9 +139,7 @@ function Calendar(data, {
     title = i => T[i];
   }
 
-  // Group the index by year, in reverse input order. (Assuming that the input is
-  // chronological, this will show years in reverse chronological order.)
-  // const years = d3.groups(I, i => X[i].getUTCFullYear()).reverse();
+  // Group the index by year.
   const years = d3.groups(I, i => X[i].getUTCFullYear());
 
   function pathMonth(t) {
@@ -120,31 +172,19 @@ function Calendar(data, {
       .attr("fill","#FFFFFF");
 
   var myColor = d3.scaleOrdinal(["Childhood (Age 0-13)", "Adolescence (Age 13-19)", "Early Adulthood (Age 20-34)", "Middle Adulthood (Age 35-49)", "Mature Adulthood (Age 50-79)", "Late Adulthood (Age 80+)"],
-    ["#aff05b", "#52f667", "#1ddfa3", "#23abd8", "#4c6edb", "#6e40aa"]);
-   
-  
+    ["#aff05b", "#52f667", "#1ddfa3", "#23abd8", "#4c6edb", "#6e40aa"]);  
     
   const cell = year.append("g")
     .selectAll("rect")
-    // .data(weekday === "weekday"
-    //     ? ([, I]) => I.filter(i => ![0, 6].includes(X[i].getUTCDay()))
-    //     : ([, I]) => I)
-    // .data(([, I]) => I)
     .data(([, I]) => I.filter(i => ![0,1,2,3,4, 6].includes(X[i].getUTCDay())))
     .join("rect")
       .attr("width", cellSize - 1)
       .attr("height", cellSize - 1)
       .attr("x", i => timeWeek.count(d3.utcYear(X[i]), X[i]) * cellSize + 0.5)
-      // .attr("y", i => countDay(X[i].getUTCDay()) * cellSize + 0.5)
-      // .attr("y", 0)
       .attr("fill", function(d){
         if (X[d] < new Date()) {
-          // console.log(X[d])
           return myColor(Y[d])
-        }  //else if (X[d] === new Date()) {
-        //   console.log(X[d])
-        //   return "#FF0000"
-        // }
+        } 
         else {          
           return "#000000"
         } 
@@ -160,7 +200,6 @@ function Calendar(data, {
       })
       .attr("stroke-width", "0.5")
 
-      //Next steps: need to modify the statement so that it is checking if X[d] is part of the current week.    
       .attr("class", function(d){
         if (timeWeek.count(d3.utcYear(X[d]), X[d]) === timeWeek.count(d3.utcYear(new Date()), new Date()) && X[d].getUTCFullYear() === new Date().getUTCFullYear()) {
           console.log(timeWeek.count(d3.utcYear(X[d]), X[d]))
@@ -168,17 +207,9 @@ function Calendar(data, {
           return "cursor"
         }
       })
-
-      
-
-  if (title) cell.append("title")
-      .text(title);
-
   return Object.assign(svg.node(), {scales: {color}});
 }
 )}
-
-
 
 export default function define(runtime, observer) {
   const main = runtime.module();
@@ -187,29 +218,13 @@ export default function define(runtime, observer) {
     ["^DJI@2.csv", {url: new URL("./files/DJI2.csv", import.meta.url), mimeType: "text/csv", toString}]
   ]);
   main.builtin("FileAttachment", runtime.fileAttachments(name => fileAttachments.get(name)));
-
-  // uncomment these two lines & comment out the 3rd line if you want to enable the dropdown box to select starting day of the week
-  // main.variable(observer("viewof weekday")).define("viewof weekday", ["Inputs"], _weekday);
-  // main.variable(observer("weekday")).define("weekday", ["Generators", "viewof weekday"], (G, _) => G.input(_));
   main.variable(observer("weekday")).define("weekday", "sunday");
-
-
   main.variable(observer("key1")).define("key1",["Swatches", "d3"], _14);
-
   main.variable(observer("chart")).define("chart", ["Calendar","dji","weekday","width"], _chart);
-
-  //Two chart options. Different colors.
-  main.variable(observer("onecolorchart")).define(["Calendar","dji","weekday","width"], _6);
-
   main.variable(observer("dji")).define("dji", ["FileAttachment"], _dji);
-
+  main.variable(observer("Swatches")).define("Swatches", ["d3","htl"], _Swatches);
   main.variable(observer("Calendar")).define("Calendar", ["d3"], _Calendar);
-
-  const child1 = runtime.module(define1);
-  main.import("Legend", child1);
-  
-  const child2 = runtime.module(define1);
-  main.import("Swatches", child2);
-
   return main;
 }
+
+  

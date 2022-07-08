@@ -28,14 +28,10 @@
 
             const runtime = new Runtime();
 
-            // const ins1 = new Inspector(document.getElementById("a1"));
-            // const main = runtime.module(define, Inspector.into(document.body));
-
             const main = runtime.module(define, name => {
                 if (name === "key") return new Inspector(document.querySelector("#key"));
                 if (name === "key1") return new Inspector(document.querySelector("#key1"));
                 if (name === "chart") return new Inspector(document.querySelector("#chart"));
-                // if (name === "onecolorchart") return new Inspector(document.querySelector("#onecolorchart"));
             });
             
         </script>
