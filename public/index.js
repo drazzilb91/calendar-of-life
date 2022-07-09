@@ -219,8 +219,6 @@ function Calendar(data, {
 
       .attr("class", function(d){
         if (timeWeek.count(d3.utcYear(X[d]), X[d]) === timeWeek.count(d3.utcYear(new Date()), new Date()) && X[d].getUTCFullYear() === new Date().getUTCFullYear()) {
-          console.log(timeWeek.count(d3.utcYear(X[d]), X[d]))
-          console.log("test")
           return "cursor"
         }
       })
