@@ -134,5 +134,4 @@ dist
 *.xlsx
 
 #Firebase
-.firebase/
-
+.firebase/*
