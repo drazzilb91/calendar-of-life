@@ -11,6 +11,20 @@
 			"problemMatcher": [],
 			"label": "npm: install",
 			"detail": "install dependencies from package"
+		},
+		{
+			"label": "firebase: deploy",
+			"type": "shell",
+			"command": "firebase deploy",
+			"windows": {
+				"command": "firebase deploy"
+			},
+			"group": "deploy",
+			"presentation": {
+				"reveal": "always",
+				"panel": "new"
+			},
+			"problemMatcher": []
 		}
 	]
 }
