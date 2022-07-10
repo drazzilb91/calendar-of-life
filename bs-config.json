@@ -1,0 +1,8 @@
+{
+  "port": 8000,
+  "watch" : true,
+  "server": { "baseDir": "./public" },
+  "injectChanges" : true,
+  "watchEvents" : ["change"],
+  "open" : false
+}
