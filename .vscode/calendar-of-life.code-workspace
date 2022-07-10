@@ -1,0 +1,58 @@
+{
+	"folders": [
+		{
+			"path": "c:\\Users\\Michael\\Documents\\GitHub\\calendar-of-life"
+		}
+	],
+	"settings": {
+		"liveServer.settings.port" : 8080,
+		"liveServer.settings.root" : "/public", //Add setting here to stop external browser from launching on start of live server
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"name": "Attach to Chrome",
+				"port": 9222,
+				"request": "attach",
+				"type": "chrome",
+				"webRoot": "/",
+				"presentation": {
+					"hidden": true
+				}
+			},
+			{
+				"name": "Launch Edge Headless",
+				"request": "launch",
+				"runtimeArgs": [
+					"--headless"
+					"--remote-debugging-port=9222"
+				],
+				"type": "msedge",
+				"url": "http://localhost:8080",
+				"webRoot": "/",
+				"presentation": {
+					"hidden": true
+				}
+			},
+			{
+				"type": "vscode-edge-devtools.debug",
+				"name": "Open Edge DevTools",
+				"request": "attach",
+				"url": "http://localhost:8080",
+				"presentation": {
+					"hidden": true
+				}
+			}
+		],
+		"compounds": [
+			{
+				"name": "Launch Edge and attach DevTools",
+				"configurations": [
+					"Launch Edge Headless",
+					"Open Edge DevTools"
+				]
+			}
+		]
+	}
+}
