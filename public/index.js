@@ -199,9 +199,11 @@ function Calendar(data, {
       .attr("height", cellSize - 1)
       .attr("x", i => timeWeek.count(d3.utcYear(X[i]), X[i]) * cellSize + 0.5)
       .attr("fill", function(d){
-        if (X[d] < new Date()) {
+        if (X[d] <= new Date()) {
           return myColor(Y[d])
-        } 
+        } else if (timeWeek.count(d3.utcYear(X[d]), X[d]) === timeWeek.count(d3.utcYear(new Date()), new Date()) && X[d].getUTCFullYear() === new Date().getUTCFullYear()) {
+          return myColor(Y[d])
+        }
         else {          
           return "#000000"
         } 
@@ -210,7 +212,9 @@ function Calendar(data, {
       .attr("stroke", function(d){
         if (X[d] < new Date()) {
           return "#000000"
-        } 
+        } else if (timeWeek.count(d3.utcYear(X[d]), X[d]) === timeWeek.count(d3.utcYear(new Date()), new Date()) && X[d].getUTCFullYear() === new Date().getUTCFullYear()) {
+          return "#000000"
+        }
         else {
           return myColor(Y[d])
         } 
