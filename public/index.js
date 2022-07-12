@@ -156,13 +156,6 @@ function Calendar(data, {
   // Group the index by year.
   const years = d3.groups(I, i => X[i].getUTCFullYear());
 
-  function pathMonth(t) {
-    const d = Math.max(0, Math.min(weekDays, countDay(t.getUTCDay())));
-    const w = timeWeek.count(d3.utcYear(t), t);
-    return `${d === 0 ? `M${w * cellSize},0`
-        : d === weekDays ? `M${(w + 1) * cellSize},0`
-        : `M${(w + 1) * cellSize},0V${d * cellSize}H${w * cellSize}`}V${weekDays * cellSize}`;
-  }
 
   const svg = d3.create("svg")
       .attr("width", width)
@@ -232,7 +225,6 @@ function Calendar(data, {
 
 export default function define(runtime, observer) {
   const main = runtime.module();
-  function toString() { return this.url; }
   const fileAttachments = new Map([
     ["^DJI@2.csv", {url: new URL("./files/DJI2.csv", import.meta.url), mimeType: "text/csv", toString}]
   ]);
