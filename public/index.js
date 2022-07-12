@@ -116,7 +116,7 @@ function Calendar(data, {
   x = ([x]) => x, // given d in data, returns the (temporal) x-value
   y = ([, y]) => y, // given d in data, returns the (quantitative) y-value
   title, // given d in data, returns the title text
-  width = 795, // width of the chart, in pixels
+  width = 412, // width of the chart, in pixels
   cellSize = 15, // width and height of an individual day, in pixels
   weekday = "weekday", // either: weekday, sunday, or monday
   formatDay = i => "SMTWTFS"[i], // given a day number in [0, 6], the day-of-week label
@@ -161,14 +161,14 @@ function Calendar(data, {
       .attr("width", width)
       .attr("height", height * years.length)
       .attr("viewBox", [0, 0, width, height * (years.length+10)])
-      .attr("style", "max-width: 100%; height: auto; height: intrinsic;")
+      .attr("style", "max-width: 100%; width: auto; height: intrinsic;")
       .attr("font-family", "sans-serif")
       .attr("font-size", 10);
 
   const year = svg.selectAll("g")
     .data(years)
     .join("g")
-      .attr("transform", (d, i) => `translate(40.5,${height * i + cellSize * 1.5})`);
+      .attr("transform", (d, i) => `translate(8,${height * i + cellSize * 1.5})`);
 
   year.append("text")
       .attr("x", -5)
