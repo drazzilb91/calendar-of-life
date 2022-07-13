@@ -6,7 +6,7 @@ Check out a live version here: [https://calendar-of-life.web.app/](https://calen
 
 ## Contributors
 
-- Michael Mund, [drazzilb91](https://github.com/drazzilb91) on Github (Main Contributor / Author)
+- Michael M, [drazzilb91](https://github.com/drazzilb91) on Github (Main Contributor / Author)
 
 ## See Also
 
