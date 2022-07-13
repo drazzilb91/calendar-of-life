@@ -1,0 +1,22 @@
+body {background-color: black;}
+
+/* Cursor Start */
+.cursor { 
+    text-decoration: blink;
+    animation: blinker 1s linear infinite;
+  }
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+  
+@keyframes show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+  /* Cursor End */
