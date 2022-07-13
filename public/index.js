@@ -1,4 +1,4 @@
-// import define1 from "./color-legend@808.js";
+
 
 const PHASES = [[
   "Childhood (Age 0-13)",
