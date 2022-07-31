@@ -53,8 +53,40 @@
 				},
 				"background": {
 					"activeOnStart": true,
-					"beginsPattern": "^(.+)Reloading Browsers\\.+",
-					"endsPattern": "^(.+)Watching files\\.+"
+					"beginsPattern": "^.+Reloading\\sBrowsers\\.+",
+					"endsPattern": "^.+Watching\\sfiles\\.+"
+				}
+        	}
+		},
+		{
+			"label": "Run VITE",
+			"type": "shell",
+			"command": "vite --port 8000",
+			"group": "test",
+			"presentation": {
+				"reveal": "always",
+				"panel": "new",
+				"close": true
+			},
+			"options": {
+				"cwd": "${workspaceFolder}\\public"
+			},
+			"isBackground": true,
+			"problemMatcher": {
+				"owner": "javascript",
+				"fileLocation": ["relative", "${workspaceFolder}\\public"],
+				"pattern": {
+				  "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+				  "file": 1,
+				  "line": 2,
+				  "column": 3,
+				  "severity": 4,
+				  "message": 5
+				},
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "^VITE.+ready",
+					"endsPattern": "^.+Local:"
 				}
         	}
 		}
