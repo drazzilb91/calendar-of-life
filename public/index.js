@@ -15,6 +15,25 @@ const PHASES = [[
   "#6e40aa"]
 ];  
 
+const PHASES2 = [[
+  "Childhood (Age 0-13)",
+  "Adolescence (Age 13-19)",
+  "Early Adulthood (Age 20-34)",
+  "Refereeing",
+  "Middle Adulthood (Age 35-49)",
+  "Mature Adulthood (Age 50-79)",
+  "Late Adulthood (Age 80+)"],
+["#aff05b",
+  "#52f667",
+  "#1ddfa3",
+  "#FF0000",
+  "#23abd8",
+  "#4c6edb",
+  "#6e40aa"]
+];
+
+
+
 function _Swatches(d3,htl){return(
   function Swatches(color, {
     columns = null,
@@ -100,9 +119,9 @@ Calendar(dji, {
 })
 )}
 
-function _chart2(Calendar, dji, weekday, width) {
+function _chart2(Calendar, dji2, weekday, width) {
   return (
-    Calendar(dji, {
+    Calendar(dji2, {
       x: d => d.Date,
       y: d => d.Volume,
       weekday,
@@ -115,9 +134,22 @@ function _dji(FileAttachment){return(
 FileAttachment("^DJI@2.csv").csv({typed: true})
 )}
 
+function _dji2(FileAttachment2) {
+  return (
+    FileAttachment2("^DJI@2soccer.csv").csv({ typed: true })
+  )
+}
+
 function _key(Swatches, d3) {
   return (
     Swatches(d3.scaleOrdinal(PHASES[0],PHASES[1])
+    )
+  )
+}
+
+function _key2(Swatches, d3) {
+  return (
+    Swatches(d3.scaleOrdinal(PHASES2[0], PHASES2[1])
     )
   )
 }
@@ -234,17 +266,24 @@ function Calendar(data, {
 }
 )}
 
+
 export default function define(runtime, observer) {
   const main = runtime.module();
   const fileAttachments = new Map([
     ["^DJI@2.csv", {url: new URL("./files/DJI2.csv", import.meta.url), mimeType: "text/csv", toString}]
   ]);
+  const fileAttachments2 = new Map([
+    ["^DJI@2soccer.csv", { url: new URL("./files/DJI2soccer.csv", import.meta.url), mimeType: "text/csv", toString }]
+  ]);
   main.builtin("FileAttachment", runtime.fileAttachments(name => fileAttachments.get(name)));
+  main.builtin("FileAttachment2", runtime.fileAttachments(name => fileAttachments2.get(name)));
   main.variable(observer("weekday")).define("weekday", "sunday");
   main.variable(observer("key")).define("key",["Swatches", "d3"], _key);
+  main.variable(observer("key2")).define("key2",["Swatches", "d3"], _key2);
   main.variable(observer("chart")).define("chart", ["Calendar","dji","weekday","width"], _chart);
-  main.variable(observer("chart2")).define("chart2", ["Calendar","dji","weekday","width"], _chart2);
+  main.variable(observer("chart2")).define("chart2", ["Calendar","dji2","weekday","width"], _chart2);
   main.variable(observer("dji")).define("dji", ["FileAttachment"], _dji);
+  main.variable(observer("dji2")).define("dji2", ["FileAttachment2"], _dji2);
   main.variable(observer("Swatches")).define("Swatches", ["d3","htl"], _Swatches);
   main.variable(observer("Calendar")).define("Calendar", ["d3"], _Calendar);
   return main;

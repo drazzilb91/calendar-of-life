@@ -18,6 +18,7 @@
         <![endif]-->
 
         <div id="key"></div>
+        <div id="key2"></div>
         <!-- <div class="container">
             <div class="chart1" id="chart"></div>
             <div class="chart2" id="chart2"></div>
@@ -45,10 +46,11 @@
 
             const main = runtime.module(define, name => {
                 if (name === "key") return new Inspector(document.querySelector("#key"));
+                if (name === "key2") return new Inspector(document.querySelector("#key2"));
                 if (name === "chart") return new Inspector(document.querySelector("#chart"));
                 if (name === "chart2") return new Inspector(document.querySelector("#chart2"));
             });
-            
+
         </script>
     </body>
 </html>
