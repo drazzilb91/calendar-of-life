@@ -100,11 +100,22 @@ Calendar(dji, {
 })
 )}
 
+function _chart2(Calendar, dji, weekday, width) {
+  return (
+    Calendar(dji, {
+      x: d => d.Date,
+      y: d => d.Volume,
+      weekday,
+      width
+    })
+  )
+}
+
 function _dji(FileAttachment){return(
 FileAttachment("^DJI@2.csv").csv({typed: true})
 )}
 
-function _14(Swatches, d3) {
+function _key(Swatches, d3) {
   return (
     Swatches(d3.scaleOrdinal(PHASES[0],PHASES[1])
     )
@@ -117,7 +128,7 @@ function Calendar(data, {
   y = ([, y]) => y, // given d in data, returns the (quantitative) y-value
   title, // given d in data, returns the title text
   width = 412, // width of the chart, in pixels
-  cellSize = 15, // width and height of an individual day, in pixels
+  cellSize = 25, // width and height of an individual day, in pixels
   weekday = "weekday", // either: weekday, sunday, or monday
   formatDay = i => "SMTWTFS"[i], // given a day number in [0, 6], the day-of-week label
   formatMonth = "%b", // format specifier string for months (above the chart)
@@ -161,9 +172,9 @@ function Calendar(data, {
       .attr("width", width)
       .attr("height", height * years.length)
       .attr("viewBox", [0, 0, width, height * (years.length+10)])
-      .attr("style", "max-width: 100%; width: auto; height: intrinsic;")
+      .attr("style", "max-width: 90%; width: fit-content; height: auto;")
       .attr("font-family", "sans-serif")
-      .attr("font-size", 10);
+      .attr("font-size", 20);
 
   const year = svg.selectAll("g")
     .data(years)
@@ -230,8 +241,9 @@ export default function define(runtime, observer) {
   ]);
   main.builtin("FileAttachment", runtime.fileAttachments(name => fileAttachments.get(name)));
   main.variable(observer("weekday")).define("weekday", "sunday");
-  main.variable(observer("key1")).define("key1",["Swatches", "d3"], _14);
+  main.variable(observer("key")).define("key",["Swatches", "d3"], _key);
   main.variable(observer("chart")).define("chart", ["Calendar","dji","weekday","width"], _chart);
+  main.variable(observer("chart2")).define("chart2", ["Calendar","dji","weekday","width"], _chart2);
   main.variable(observer("dji")).define("dji", ["FileAttachment"], _dji);
   main.variable(observer("Swatches")).define("Swatches", ["d3","htl"], _Swatches);
   main.variable(observer("Calendar")).define("Calendar", ["d3"], _Calendar);

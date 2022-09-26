@@ -18,9 +18,24 @@
         <![endif]-->
 
         <div id="key"></div>
-        <div id="key1"></div>
-        <div id="chart"></div>
-        <div id="onecolorchart"></div>
+        <!-- <div class="container">
+            <div class="chart1" id="chart"></div>
+            <div class="chart2" id="chart2"></div>
+        </div> -->
+
+        <div class="container2" id="chart"></div>
+        <div class="container3" id="chart2"></div>
+
+        <!-- <div class="split left">
+            <div class="centered">
+                <div id="chart"></div>
+            </div>
+        </div>
+        <div class="split right">
+            <div class="centered">
+                <div id="chart2"></div>
+            </div>
+        </div> -->
 
         <script type="module">
             import define from "./index.js";
@@ -30,8 +45,8 @@
 
             const main = runtime.module(define, name => {
                 if (name === "key") return new Inspector(document.querySelector("#key"));
-                if (name === "key1") return new Inspector(document.querySelector("#key1"));
                 if (name === "chart") return new Inspector(document.querySelector("#chart"));
+                if (name === "chart2") return new Inspector(document.querySelector("#chart2"));
             });
             
         </script>
