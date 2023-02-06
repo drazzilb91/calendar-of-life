@@ -27,18 +27,10 @@
 			"problemMatcher": []
 		},
 		{
-			"label": "Run Lite-server",
-			"type": "shell",
-			"command": "lite-server -c bs-config.json",
-			"group": "test",
-			"presentation": {
-				"reveal": "always",
-				"panel": "new"
-			},
-			"options": {
-				"cwd": "${workspaceFolder}"
-			},
-			"isBackground": true
-        }
+			"type": "npm",
+			"script": "dev",
+			"label": "npm: Dev",
+
+		}
 	]
 }

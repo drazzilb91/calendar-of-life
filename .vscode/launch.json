@@ -9,31 +9,29 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "pwa-msedge",
+            "type": "pwa-chrome",
+            "request": "launch",
+            "name": "Launch Chrome against localhost",
+            "url": "http://localhost:5173",
+            "webRoot": "${workspaceFolder}/app"                  
+        },        
+        {
+            "type": "pwa-chrome",
             "name": "Launch Microsoft Edge in headless mode",
             // The preLaunchTask is causing an error. Something to work on later. But if you say debug anyway, then you can continue.
-            "preLaunchTask": "Run Lite-server", // The name of the task defined above
             "request": "launch",
-            "runtimeArgs": [
-                "--headless",
-                "--remote-debugging-port=9222"
-            ],
-            "url": "http://localhost:8000/index.html", // Provide your project's url to finish configuring
+            "url": "http://127.0.0.1:5173/", // Provide your project's url to finish configuring
+
             "presentation": {
-                "hidden": true
+                "hidden": false
             },
-            "serverReadyAction": {
-                "pattern": "port: ([0-9]+)",
-                "uriFormat": "http://localhost:%s",
-                "action": "debugWithEdge",
-                "webRoot": "${workspaceFolder}/public"
-            }
+            "webRoot": "${workspaceFolder}/public"
         },
         {
             "type": "vscode-edge-devtools.debug",
             "name": "Open Edge DevTools",
             "request": "attach",
-            "url": "http://localhost:8000/index.html", // Provide your project's url to finish configuring
+            "url": "http://127.0.0.1:5173/index.html", // Provide your project's url to finish configuring
             "presentation": {
                 "hidden": true
             }
