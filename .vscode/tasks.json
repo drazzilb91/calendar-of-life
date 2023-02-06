@@ -4,10 +4,7 @@
 		{
 			"type": "npm",
 			"script": "install",
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			},
+			"group": "build",
 			"problemMatcher": [],
 			"label": "npm: install",
 			"detail": "install dependencies from package"
@@ -42,21 +39,24 @@
 			"isBackground": true,
 			"problemMatcher": {
 				"owner": "javascript",
-				"fileLocation": ["relative", "${workspaceFolder}"],
+				"fileLocation": [
+					"relative",
+					"${workspaceFolder}"
+				],
 				"pattern": {
-				  "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
-				  "file": 1,
-				  "line": 2,
-				  "column": 3,
-				  "severity": 4,
-				  "message": 5
+					"regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+					"file": 1,
+					"line": 2,
+					"column": 3,
+					"severity": 4,
+					"message": 5
 				},
 				"background": {
 					"activeOnStart": true,
 					"beginsPattern": "^.+Reloading\\sBrowsers\\.+",
 					"endsPattern": "^.+Watching\\sfiles\\.+"
 				}
-        	}
+			}
 		},
 		{
 			"label": "Run VITE",
@@ -74,21 +74,35 @@
 			"isBackground": true,
 			"problemMatcher": {
 				"owner": "javascript",
-				"fileLocation": ["relative", "${workspaceFolder}\\public"],
+				"fileLocation": [
+					"relative",
+					"${workspaceFolder}\\public"
+				],
 				"pattern": {
-				  "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
-				  "file": 1,
-				  "line": 2,
-				  "column": 3,
-				  "severity": 4,
-				  "message": 5
+					"regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+					"file": 1,
+					"line": 2,
+					"column": 3,
+					"severity": 4,
+					"message": 5
 				},
 				"background": {
 					"activeOnStart": true,
 					"beginsPattern": "^VITE.+ready",
 					"endsPattern": "^.+Local:"
 				}
-        	}
+			}
+		},
+		{
+			"type": "npm",
+			"script": "build",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": [],
+			"label": "npm: build",
+			"detail": "vite build"
 		}
 	]
 }
