@@ -1,6 +1,6 @@
 // Contains the code for the swatches function
-import * as d3 from "d3";
-import * as htl from "htl";
+import { scaleOrdinal , scaleImplicit } from "d3";
+import { html } from "htl";
 
 // Copyright 2021, Observable Inc.
 // Released under the ISC license.
@@ -16,7 +16,7 @@ export function Swatches(textcolor, color, {
 } = {}) {
   const id = `-swatches-${Math.random().toString(16).slice(2)}`;
   const unknown = formatUnknown == null ? undefined : color.unknown();
-  const unknowns = unknown == null || unknown === d3.scaleImplicit ? [] : [unknown];
+  const unknowns = unknown == null || unknown === scaleImplicit ? [] : [unknown];
   const domain = color.domain().concat(unknowns);
   if (format === undefined) format = x => x === unknown ? formatUnknown : x;
 
@@ -24,7 +24,7 @@ export function Swatches(textcolor, color, {
     return `&#${character.charCodeAt(0).toString()};`;
   }
 
-  if (columns !== null) return htl.html`<div style="display: flex; align-items: center; margin-left: ${+marginLeft}px; min-height: 33px; font: 10px sans-serif;">
+  if (columns !== null) return html`<div style="display: flex; align-items: center; margin-left: ${+marginLeft}px; min-height: 33px; font: 10px sans-serif;">
   <style>
 
 .${id}-item {
@@ -50,7 +50,7 @@ export function Swatches(textcolor, color, {
   </style>
   <div style=${{width: "100%", columns}}>${domain.map(value => {
     const label = `${format(value)}`;
-    return htl.html`<div class=${id}-item>
+    return html`<div class=${id}-item>
       <div class=${id}-swatch style=${{background: color(value)}}></div>
       <div class=${id}-label title=${label}>${label}</div>
     </div>`;
@@ -58,7 +58,7 @@ export function Swatches(textcolor, color, {
   </div>
 </div>`;
 
-  return htl.html`<div style="display: flex; align-items: center; min-height: 33px; margin-left: ${+marginLeft}px; font: 10px sans-serif;">
+  return html`<div style="display: flex; align-items: center; min-height: 33px; margin-left: ${+marginLeft}px; font: 10px sans-serif;">
     <style>
       .${id} {
         display: inline-flex;
@@ -74,12 +74,12 @@ export function Swatches(textcolor, color, {
         background: var(--color);
       }
     </style>
-    <div>${domain.map(value => htl.html`<span class="${id}" style="--color: ${color(value)};color:${textcolor};">${format(value)}</span>`)}</div>`;
+    <div>${domain.map(value => html`<span class="${id}" style="--color: ${color(value)};color:${textcolor};">${format(value)}</span>`)}</div>`;
   // TODO: Would rather pass in the color as a variable.
 }
 
 
 // Modified to take a textcolor, descriptions, and colors
 export function swatches(textcolor,descriptions, colors) {
-  return Swatches(textcolor,d3.scaleOrdinal(descriptions,colors))
+  return Swatches(textcolor,scaleOrdinal(descriptions,colors))
 }

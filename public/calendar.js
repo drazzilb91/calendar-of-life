@@ -7,7 +7,7 @@
     // Released under the ISC license.
     // https://observablehq.com/@d3/calendar-view
 
-import * as d3 from "d3";
+import { scaleOrdinal , map , range , utcSunday , utcMonday , utcFormat , groups , create , utcYear } from "d3";
 
 export function Calendar(data, {
     x = ([x]) => x, // given d in data, returns the (temporal) x-value
@@ -23,37 +23,37 @@ export function Calendar(data, {
     colorvalues = PHASES[1]
 } = {}) {
     // Compute values.
-    const X = d3.map(data, x);
-    const Y = d3.map(data, y);
-    const I = d3.range(X.length);
+    const X = map(data, x);
+    const Y = map(data, y);
+    const I = range(X.length);
 
     const countDay = weekday === "sunday" ? i => i : i => (i + 6) % 7;
-    const timeWeek = weekday === "sunday" ? d3.utcSunday : d3.utcMonday;
+    const timeWeek = weekday === "sunday" ? utcSunday : utcMonday;
     const weekDays = weekday === "weekday" ? 5 : 7;
     const height = cellSize;
 
     // Compute the color scale.
-    const myColor = d3.scaleOrdinal(colorlabels,colorvalues);
+    const myColor = scaleOrdinal(colorlabels,colorvalues);
 
 
     // Construct formats.
-    formatMonth = d3.utcFormat(formatMonth);
+    formatMonth = utcFormat(formatMonth);
 
     // Compute titles.
     if (title === undefined) {
-    const formatDate = d3.utcFormat("%B %-d, %Y");
+    const formatDate = utcFormat("%B %-d, %Y");
     // const formatValue = color.tickFormat(100, yFormat);
     title = i => `${formatDate(X[i])}\n${formatValue(Y[i])}`;
     } else if (title !== null) {
-    const T = d3.map(data, title);
+    const T = map(data, title);
     title = i => T[i];
     }
 
     // Group the index by year.
-    const years = d3.groups(I, i => (new Date(X[i])).getUTCFullYear());
+    const years = groups(I, i => (new Date(X[i])).getUTCFullYear());
 
 
-    const svg = d3.create("svg")
+    const svg = create("svg")
         .attr("width", width)
         .attr("height", height * years.length)
         .attr("viewBox", [0, 0, width, height * (years.length+10)])
@@ -81,11 +81,11 @@ export function Calendar(data, {
     .join("rect")
         .attr("width", cellSize - 1)
         .attr("height", cellSize - 1)
-        .attr("x", i => timeWeek.count(d3.utcYear(new Date(X[i])), new Date(X[i])) * cellSize + 0.5)
+        .attr("x", i => timeWeek.count(utcYear(new Date(X[i])), new Date(X[i])) * cellSize + 0.5)
         .attr("fill", function(d){
         if ((new Date(X[d])) <= (new Date())) {
             return myColor(Y[d])
-        } else if (timeWeek.count(d3.utcYear((new Date(X[d]))), (new Date(X[d]))) === timeWeek.count(d3.utcYear(new Date()), new Date()) && (new Date(X[d])).getUTCFullYear() === (new Date()).getUTCFullYear()) {
+        } else if (timeWeek.count(utcYear((new Date(X[d]))), (new Date(X[d]))) === timeWeek.count(utcYear(new Date()), new Date()) && (new Date(X[d])).getUTCFullYear() === (new Date()).getUTCFullYear()) {
             return myColor(Y[d])
         }
         else {          
@@ -96,7 +96,7 @@ export function Calendar(data, {
         .attr("stroke", function(d){
         if ((new Date(X[d])) < (new Date())) {
             return "#000000"
-        } else if (timeWeek.count(d3.utcYear(X[d]), X[d]) === timeWeek.count(d3.utcYear(new Date()), new Date()) && X[d].getUTCFullYear() === new Date().getUTCFullYear()) {
+        } else if (timeWeek.count(utcYear(X[d]), X[d]) === timeWeek.count(utcYear(new Date()), new Date()) && X[d].getUTCFullYear() === new Date().getUTCFullYear()) {
             return "#000000"
         }
         else {
@@ -106,7 +106,7 @@ export function Calendar(data, {
         .attr("stroke-width", "0.5")
 
         .attr("class", function(d){
-        if (timeWeek.count(d3.utcYear((new Date(X[d]))), (new Date(X[d]))) === timeWeek.count(d3.utcYear(new Date()), new Date()) && (new Date(X[d])).getUTCFullYear() === (new Date()).getUTCFullYear()) {
+        if (timeWeek.count(utcYear((new Date(X[d]))), (new Date(X[d]))) === timeWeek.count(utcYear(new Date()), new Date()) && (new Date(X[d])).getUTCFullYear() === (new Date()).getUTCFullYear()) {
             return "cursor"
         }
         })

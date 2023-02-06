@@ -15,6 +15,13 @@ export default defineConfig({
             input: {
                 main: path.resolve(root, 'index.html'),
             },
+            output: {
+                manualChunks: {
+                    'd3': ['d3'],
+                    'htl': ['htl'],
+                    'data': ['./public/data'],
+                }
+            }
         },
     },
 })
