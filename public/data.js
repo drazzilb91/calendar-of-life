@@ -1,4 +1,5 @@
-export const dji = [
+// Array of objects with date and "volume" which represents which color to use for that date. Interim method to get the data into the calendar.
+export const calendarData = [
     {
       "Date": "1991-05-03",
       "Volume": 0
