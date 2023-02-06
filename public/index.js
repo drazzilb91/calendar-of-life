@@ -19,6 +19,7 @@ const PHASES = [[
 
 const weekday = "sunday";
 const dji = data.dji;
+
 const myCal = Calendar(dji, {
   x: d => d.Date,
   y: d => d.Volume,
@@ -30,14 +31,9 @@ document.querySelector("#chart").appendChild(myCal);
 
 // export default function define(runtime, observer) {
 //   const main = runtime.module();
-//   const fileAttachments = new Map([
-//     ["^DJI@2.csv", {url: new URL("./files/DJI2.csv", import.meta.url), mimeType: "text/csv", toString}]
-//   ]);
-//   main.builtin("FileAttachment", runtime.fileAttachments(name => fileAttachments.get(name)));
 //   main.variable(observer("weekday")).define("weekday", "sunday");
 //   main.variable(observer("key1")).define("key1",["Swatches", "d3"], _14);
 //   main.variable(observer("chart")).define("chart", ["Calendar","dji","weekday","width"], _chart);
-//   main.variable(observer("dji")).define("dji", ["FileAttachment"], _dji);
 //   main.variable(observer("Swatches")).define("Swatches", ["d3","htl"], _Swatches);
 //   main.variable(observer("Calendar")).define("Calendar", ["d3"], _Calendar);
 //   return main;
