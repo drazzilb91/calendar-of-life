@@ -1,8 +1,5 @@
 // Converts an array of phases to an object of dates and colors
 import { dateSettings } from './attributes.js';
-  
-
-
 
 function createDates(periodData={
     "id": 2,
@@ -21,11 +18,9 @@ function createDates(periodData={
     // determine number of days to create in array
     const numDays = Math.abs(( currentEnd - currentStart ) / 3600 / 24 / 1000) + 1;
     // TODO: Check that the +1 is having the desired behavior
-    // console.log(numDays);
-    // console.log('The labels are: ${periodData.Label}');
+
 
     // create array of dates and colors for each day in the phase and push to array
-
     let arrayOfDates = [];
     for (let i = 0; i < numDays; i++){
         let currentDate = new Date(currentStart);
@@ -37,11 +32,4 @@ function createDates(periodData={
     return arrayOfDates;
 }
 
-
-
-const preparedData = [];
-for (let i = 0; i < dateSettings.length; i++){
-    preparedData.push(createDates(dateSettings[i]));
-}
-
-console.log(preparedData);
+export const preparedData = dateSettings.map(setting => createDates(setting)).flat();

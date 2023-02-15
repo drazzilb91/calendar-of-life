@@ -6,12 +6,13 @@ import { PHASES , weekday } from "./attributes";
 import { calendarData } from "./data"
 import { swatches } from "./swatches";
 import { Calendar } from "./calendar";
+import { preparedData } from "./myarray";
 
 
 // Create the calendar
-const myCal = Calendar(calendarData, {
-  x: d => d.Date,
-  y: d => d.Volume,
+const myCal = Calendar(preparedData, {
+  x: d => d[0],
+  y: d => d[1],
   weekday,
   width: 940,
   colorlabels: PHASES[0],
