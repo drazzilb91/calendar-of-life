@@ -38,14 +38,14 @@
             }
         },
         {
-            "type": "pwa-msedge",
+            "type": "vscode-edge-devtools.debug",
             "name": "Launch Microsoft Edge",
             "request": "launch",
-            "preLaunchTask": "Run Lite-server", // The name of the task defined above
+            // "preLaunchTask": "Run Lite-server", // The name of the task defined above
             "runtimeArgs": [
                 "--remote-debugging-port=9222"
             ],
-            "url": "http://localhost:8000/index.html", // Provide your project's url to finish configuring
+            "url": "http://127.0.0.1:5173/index.html", // Provide your project's url to finish configuring
             "presentation": {
                 "hidden": true
             }
