@@ -3,7 +3,6 @@
 // Date: 2023-02-05
 
 import { PHASES , weekday } from "./attributes";
-import { calendarData } from "./data"
 import { swatches } from "./swatches";
 import { Calendar } from "./calendar";
 import { createAllDates } from "./arrayBuilder";
