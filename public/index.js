@@ -6,11 +6,13 @@ import { PHASES , weekday } from "./attributes";
 import { calendarData } from "./data"
 import { swatches } from "./swatches";
 import { Calendar } from "./calendar";
-import { preparedData } from "./myarray";
+import { createAllDates } from "./arrayBuilder";
+import { dateSettings } from './attributes.js';
 
+const preparedData = createAllDates(dateSettings);
 
 // Create the calendar
-const myCal = Calendar(preparedData, {
+const calendar = Calendar(preparedData, {
   x: d => d[0],
   y: d => d[1],
   weekday,
@@ -23,7 +25,7 @@ const myCal = Calendar(preparedData, {
 document.querySelector("#key").appendChild(swatches("white",PHASES[0],PHASES[1]));
 
 // Create and render the calendar
-document.querySelector("#chart").appendChild(myCal);
+document.querySelector("#chart").appendChild(calendar);
 
 
   

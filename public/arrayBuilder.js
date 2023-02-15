@@ -1,5 +1,5 @@
 // Converts an array of phases to an object of dates and colors
-import { dateSettings } from './attributes.js';
+// import { dateSettings } from './attributes.js';
 
 function createDates(periodData={
     "id": 2,
@@ -32,4 +32,8 @@ function createDates(periodData={
     return arrayOfDates;
 }
 
-export const preparedData = dateSettings.map(setting => createDates(setting)).flat();
+export function createAllDates(dateSettings){
+    return dateSettings.map(setting => createDates(setting)).flat();
+}
+
+// export const preparedData = dateSettings.map(setting => createDates(setting)).flat();
