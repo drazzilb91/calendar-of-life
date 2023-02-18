@@ -18,8 +18,7 @@ export default defineConfig({
             output: {
                 manualChunks: {
                     'd3': ['d3'],
-                    'htl': ['htl'],
-                    'data': ['./public/data'],
+                    'htl': ['htl']
                 }
             }
         },
