@@ -15,7 +15,7 @@ const calendar = Calendar(preparedData, {
   x: d => d[0],
   y: d => d[1],
   weekday,
-  width: window.visualViewport.width,
+  width: "100%",
   colorlabels: PHASES[0],
   colorvalues: PHASES[1]
 })

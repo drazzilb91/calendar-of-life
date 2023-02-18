@@ -58,13 +58,13 @@ export function Calendar(data, {
     const svg = create("svg")
         .attr("width", width)
         .attr("viewBox", [0, 0, maxWidth, svgheight])
-        .attr("style", `max-width:${maxWidth}px;`)
         .attr("font-family", "sans-serif")
-        .attr("font-size", 10);
+        .attr("font-size", 10)
+        .attr("style", `max-width:${maxWidth}px;`);
 
     const year = svg.selectAll("g")
-    .data(years)
-    .join("g")
+        .data(years)
+        .join("g")
         .attr("transform", (d, i) => `translate(0,${cellheight * i + cellSize * 1.5})`);
 
     year.append("text")
