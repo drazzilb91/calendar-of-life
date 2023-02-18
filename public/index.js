@@ -25,3 +25,6 @@ document.querySelector("#key").appendChild(swatches("white",PHASES[0],PHASES[1])
 
 // Create and render the calendar
 document.querySelector("#chart").appendChild(calendar);
+
+
+  
