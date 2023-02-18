@@ -53,10 +53,11 @@ export function Calendar(data, {
     // Group the index by year.
     const years = groups(I, i => (new Date(X[i])).getUTCFullYear());
 
-    const svgheight = cellSize * ( years.length + 10);
+    const svgheight = (cellSize * years.length ) + 10;
 
     const svg = create("svg")
         .attr("width", width)
+        .attr("height", "100%")
         .attr("viewBox", [0, 0, maxWidth, svgheight])
         .attr("font-family", "sans-serif")
         .attr("font-size", 10)
