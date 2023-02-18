@@ -14,10 +14,11 @@ const preparedData = createAllDates(dateSettings);
 const calendar = Calendar(preparedData, {
   x: d => d[0],
   y: d => d[1],
+  z: d => d[2],
   weekday,
   width: "100%",
   colorlabels: PHASES[0],
-  colorvalues: PHASES[1]
+  colorvalues: PHASES[1],
 })
 
 // Create and render the swatches legend

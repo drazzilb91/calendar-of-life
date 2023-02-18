@@ -27,7 +27,7 @@ function createDates(periodData={
         
         currentDate.setDate(currentDate.getDate() + i);
         const strDate = currentDate.toISOString().slice(0,10); 
-        arrayOfDates.push([strDate, currentColor]);
+        arrayOfDates.push([strDate, currentColor, currentName, currentLabel]);
     }
     return arrayOfDates;
 }
