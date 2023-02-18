@@ -13,7 +13,8 @@ export function Calendar(data, {
     x = ([x]) => x, // given d in data, returns the (temporal) x-value
     y = ([, y]) => y, // given d in data, returns the (quantitative) y-value
     title, // given d in data, returns the title text
-    width = 940, // width of the chart, in pixels
+    width = 826, // width of the chart, in pixels
+    maxWidth = 826,
     cellSize = 15, // width and height of an individual day, in pixels
     weekday = "weekday", // either: weekday, sunday, or monday
     formatDay = i => "SMTWTFS"[i], // given a day number in [0, 6], the day-of-week label
@@ -30,7 +31,7 @@ export function Calendar(data, {
     const countDay = weekday === "sunday" ? i => i : i => (i + 6) % 7;
     const timeWeek = weekday === "sunday" ? utcSunday : utcMonday;
     const weekDays = weekday === "weekday" ? 5 : 7;
-    const height = cellSize;
+    const cellheight = cellSize;
 
     // Compute the color scale.
     const myColor = scaleOrdinal(colorlabels,colorvalues);
@@ -56,15 +57,15 @@ export function Calendar(data, {
 
     const svg = create("svg")
         .attr("width", width)
-        .attr("viewBox", [0, 0, 826, svgheight])
-        .attr("style", "max-width:826px;")
+        .attr("viewBox", [0, 0, maxWidth, svgheight])
+        .attr("style", `max-width:${maxWidth}px;`)
         .attr("font-family", "sans-serif")
         .attr("font-size", 10);
 
     const year = svg.selectAll("g")
     .data(years)
     .join("g")
-        .attr("transform", (d, i) => `translate(0,${height * i + cellSize * 1.5})`);
+        .attr("transform", (d, i) => `translate(0,${cellheight * i + cellSize * 1.5})`);
 
     year.append("text")
         .attr("x", 0)
