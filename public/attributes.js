@@ -39,8 +39,8 @@ export const dateSettings = [
     "id": 2,
     "Start": "2011-05-01",
     "End": "2026-04-30",
-    "Name": "Adolescence",
-    "Label": "Adolescence (Age 20-34)",
+    "Name": "Early Adulthood",
+    "Label": "Early Adulthood (Age 20-34)",
     "Color": "#1ddfa3"
   },
   {
