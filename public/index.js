@@ -15,7 +15,7 @@ const calendar = Calendar(preparedData, {
   x: d => d[0],
   y: d => d[1],
   weekday,
-  width: 940,
+  width: window.visualViewport,
   colorlabels: PHASES[0],
   colorvalues: PHASES[1]
 })
@@ -25,6 +25,3 @@ document.querySelector("#key").appendChild(swatches("white",PHASES[0],PHASES[1])
 
 // Create and render the calendar
 document.querySelector("#chart").appendChild(calendar);
-
-
-  
