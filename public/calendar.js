@@ -94,9 +94,9 @@ export function Calendar(data, {
         .attr("x", i => 30 + timeWeek.count(utcYear(new Date(X[i])), new Date(X[i])) * cellSize + 0.5)
         .attr("fill", function(d){
             if ((new Date(X[d])) <= (new Date())) {
-                return myColor(Y[d])
+                return Y[d]
             } else if (timeWeek.count(utcYear((new Date(X[d]))), (new Date(X[d]))) === timeWeek.count(utcYear(new Date()), new Date()) && (new Date(X[d])).getUTCFullYear() === (new Date()).getUTCFullYear()) {
-                return myColor(Y[d])
+                return Y[d]
             }
             else {          
                 return "#000000"
@@ -109,7 +109,7 @@ export function Calendar(data, {
                 return "#000000"
             }
             else {
-                return myColor(Y[d])
+                return Y[d]
             } 
         })
         .attr("stroke-width", "0.5")
@@ -119,9 +119,8 @@ export function Calendar(data, {
             }
         })
         
-        const formatDate = utcFormat("%B %-d, %Y");
-        const formatValue = color.tickFormat(100, yFormat);
-        const title2 = i => `${formatDate(X[i])}\n${formatValue(Y[i])}\n${Z[i]}`
+        const formatDate = utcFormat("%B %-d, %Y");        
+        const title2 = i => `Phase: ${Z[i]}\nWeek of ` + formatDate(new Date(X[i]))
         cell.append("title").text(title2);
 
     return Object.assign(svg.node());

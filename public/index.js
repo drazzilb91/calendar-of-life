@@ -8,21 +8,25 @@ import { Calendar } from "./calendar";
 import { createAllDates } from "./arrayBuilder";
 import { dateSettings } from './attributes.js';
 
+// retrieve all values for the key "Label" and put them in an array
+const labels = dateSettings.map(setting => setting.Label);
+const labelcolor = dateSettings.map(setting => setting.Color);
+
 const preparedData = createAllDates(dateSettings);
 
 // Create the calendar
 const calendar = Calendar(preparedData, {
-  x: d => d[0],
-  y: d => d[1],
-  z: d => d[2],
+  date: d => d[0],
+  color: d => d[1],
+  name: d => d[2],
   weekday,
   width: "100%",
-  colorlabels: PHASES[0],
-  colorvalues: PHASES[1],
+  colorlabels: labels,
+  colorvalues: labelcolor,
 })
 
 // Create and render the swatches legend
-document.querySelector("#key").appendChild(swatches("white",PHASES[0],PHASES[1]));
+document.querySelector("#key").appendChild(swatches("white",labels,labelcolor));
 
 // Create and render the calendar
 document.querySelector("#chart").appendChild(calendar);
