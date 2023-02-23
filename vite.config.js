@@ -3,11 +3,16 @@
 import { defineConfig } from 'vite'
 
 import path from 'path'
+import { debug } from 'console';
 
 // set root directory to /src
 const root = path.resolve(__dirname, 'public');
 export default defineConfig({
     root,
+    server: {
+        host: '0.0.0.0',
+        port: '5173',        
+    },
     build: {
         outDir: '../dist',
         emptyOutDir: true,

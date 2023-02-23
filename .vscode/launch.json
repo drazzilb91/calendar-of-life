@@ -14,40 +14,24 @@
             "request": "launch",
             "name": "Launch Chrome against localhost",
             "url": "http://localhost:5173",
-            "webRoot": "${workspaceFolder}/app"                  
+            "webRoot": "${workspaceFolder}/public"                  
         },        
-        {
-            "type": "pwa-chrome",
-            "name": "Launch Microsoft Edge in headless mode",
-            // The preLaunchTask is causing an error. Something to work on later. But if you say debug anyway, then you can continue.
-            "request": "launch",
-            "url": "http://127.0.0.1:5173/", // Provide your project's url to finish configuring
-
-            "presentation": {
-                "hidden": false
-            },
-            "webRoot": "${workspaceFolder}/public"
-        },
         {
             "type": "vscode-edge-devtools.debug",
             "name": "Open Edge DevTools",
             "request": "attach",
-            "url": "http://127.0.0.1:5173/index.html", // Provide your project's url to finish configuring
+            "url": "http://localhost:5173/", // Provide your project's url to finish configuring
             "presentation": {
-                "hidden": true
+                "hidden": false
             }
         },
         {
             "type": "vscode-edge-devtools.debug",
             "name": "Launch Microsoft Edge",
             "request": "launch",
-            // "preLaunchTask": "Run Lite-server", // The name of the task defined above
-            "runtimeArgs": [
-                "--remote-debugging-port=9222"
-            ],
-            "url": "http://127.0.0.1:5173/index.html", // Provide your project's url to finish configuring
+            "url": "http://localhost:5173/", // Provide your project's url to finish configuring
             "presentation": {
-                "hidden": true
+                "hidden": false
             }
         }
     ],
@@ -55,16 +39,17 @@
     // Optionally a preLaunchTask can be specified that is run before the individual debug sessions are started.
     "compounds": [
         {
-            "name": "Launch Edge Headless and attach DevTools",
+            "name": "Launch Chrome and attach",
             "configurations": [
-                "Launch Microsoft Edge in headless mode",
+                "Launch Chrome against localhost",
                 "Open Edge DevTools"
             ],
             "stopAll": true,
+            "preLaunchTask": "Run VITE",
             "presentation": {
                 "hidden": false,
                 "group": "Compounds",
-                "order": 1
+                "order": 2
             }
         },
         {
@@ -74,6 +59,7 @@
                 "Open Edge DevTools"
             ],
             "stopAll": true,
+            "preLaunchTask": "Run VITE",
             "presentation": {
                 "hidden": false,
                 "group": "Compounds",

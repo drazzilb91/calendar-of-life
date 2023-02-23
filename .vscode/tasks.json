@@ -24,44 +24,9 @@
 			"problemMatcher": []
 		},
 		{
-			"label": "Run Lite-server",
-			"type": "shell",
-			"command": "lite-server -c bs-config.json",
-			"group": "test",
-			"presentation": {
-				"reveal": "always",
-				"panel": "new",
-				"close": true
-			},
-			"options": {
-				"cwd": "${workspaceFolder}"
-			},
-			"isBackground": true,
-			"problemMatcher": {
-				"owner": "javascript",
-				"fileLocation": [
-					"relative",
-					"${workspaceFolder}"
-				],
-				"pattern": {
-					"regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
-					"file": 1,
-					"line": 2,
-					"column": 3,
-					"severity": 4,
-					"message": 5
-				},
-				"background": {
-					"activeOnStart": true,
-					"beginsPattern": "^.+Reloading\\sBrowsers\\.+",
-					"endsPattern": "^.+Watching\\sfiles\\.+"
-				}
-			}
-		},
-		{
 			"label": "Run VITE",
 			"type": "shell",
-			"command": "vite --port 8000",
+			"command": "npx vite",
 			"group": "test",
 			"presentation": {
 				"reveal": "always",
