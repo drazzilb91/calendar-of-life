@@ -8,6 +8,12 @@ import { Calendar } from "./calendar";
 import { createAllDates } from "./arrayBuilder";
 import { dateSettings } from './attributes.js';
 
+
+// import { getWeekNum } from "./getWeekNum";
+// For future development, this function will be used to calculate the week number of a date
+// alert(getWeekNum(new Date())); 
+
+
 // retrieve all values for the key "Label" and put them in an array
 const labels = dateSettings.map(setting => setting.Label);
 const labelcolor = dateSettings.map(setting => setting.Color);
