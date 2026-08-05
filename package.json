@@ -9,7 +9,7 @@
   },
   "type": "module",
   "devDependencies": {
-    "vite": "^4.5.5"
+    "vite": "^6.4.3"
   },
   "scripts": {
     "dev": "vite",
